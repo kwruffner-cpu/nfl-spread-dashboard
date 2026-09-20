@@ -87,15 +87,18 @@ st.caption(
 # SIDEBAR FILTERS
 # ---------------------------------------------------------
 
-st.sidebar.header("Filters")
+st.subheader("Filters")
+
+filter_col1, filter_col2 = st.columns(2)
 
 seasons = sorted(df["season"].dropna().astype(int).unique())
 
-season = st.sidebar.selectbox(
-    "Season",
-    seasons,
-    index=len(seasons) - 1,
-)
+with filter_col1:
+    season = st.selectbox(
+        "Season",
+        seasons,
+        index=len(seasons) - 1,
+    )
 
 season_df = df[df["season"] == season].copy()
 
@@ -105,12 +108,13 @@ weeks = sorted(
 
 week_options = ["All"] + weeks
 
-week = st.sidebar.selectbox(
-    "Week",
-    week_options,
-)
+with filter_col2:
+    week = st.selectbox(
+        "Week",
+        week_options,
+    )
 
-min_edge = st.sidebar.slider(
+min_edge = st.slider(
     "Minimum model edge",
     min_value=0.0,
     max_value=10.0,
